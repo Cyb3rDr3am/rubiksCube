@@ -16,18 +16,18 @@ typedef struct  {
     Face B;
 } Cube;
 
-extern void b(Cube *cube);
-extern void f(Cube *cube);
-extern void r(Cube *cube);
-extern void l(Cube *cube);
-extern void d(Cube *cube);
-extern void u(Cube *cube);
-extern void bp(Cube *cube);
-extern void fp(Cube *cube);
-extern void rp(Cube *cube);
-extern void lp(Cube *cube);
-extern void dp(Cube *cube);
-extern void up(Cube *cube);
-extern void rg(Face f);
-extern void rd(Face f);
+extern void b(Cube *);
+extern void f(Cube *);
+extern void r(Cube *);
+extern void l(Cube *);
+extern void d(Cube *);
+extern void u(Cube *);
+extern void bp(Cube *);
+extern void fp(Cube *);
+extern void rp(Cube *);
+extern void lp(Cube *);
+extern void dp(Cube *);
+extern void up(Cube *);
+extern void rg(Face );
+extern void rd(Face );
 #endif  //!__RUBIKSCUBE__H__

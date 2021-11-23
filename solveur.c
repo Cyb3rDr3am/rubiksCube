@@ -1,29 +1,6 @@
 #include "solveur.h"
-#define elif else if
-#define F() f(cube);append_mov(liste,"F")
-#define R() r(cube);append_mov(liste,"R")
-#define L() l(cube);append_mov(liste,"L")
-#define B() b(cube);append_mov(liste,"B")
-#define U() u(cube);append_mov(liste,"U")
-#define D() d(cube);append_mov(liste,"D")
-#define FP() fp(cube);append_mov(liste,"F'")
-#define RP() rp(cube);append_mov(liste,"R'")
-#define LP() lp(cube);append_mov(liste,"L'")
-#define BP() bp(cube);append_mov(liste,"B'")
-#define UP() up(cube);append_mov(liste,"U'")
-#define DP() dp(cube);append_mov(liste,"D'")
-#define F2() f(cube),f(cube);append_mov(liste,"F2")
-#define R2() r(cube),r(cube);append_mov(liste,"R2")
-#define L2() l(cube),l(cube);append_mov(liste,"L2")
-#define B2() b(cube),b(cube);append_mov(liste,"B2")
-#define U2() u(cube),u(cube);append_mov(liste,"U2")
-#define D2() d(cube),d(cube);append_mov(liste,"D2")
-#define CFL()    (((cube->D)[0][0] == D || (cube->D)[0][0] == F || (cube ->D)[0][0] == L) && ((cube->F)[2][0] == F || (cube->F)[2][0] == L || (cube->F)[2][0] == D) && ((cube->L)[2][0] == L || (cube->L)[2][0] == F || (cube->L)[2][0] == D))
-#define CFR()    (((cube->D)[0][2] == D || (cube->D)[0][2] == F || (cube ->D)[0][2] == R) && ((cube->F)[2][2] == F || (cube->F)[2][2] == R || (cube->F)[2][2] == D) && ((cube->R)[2][2] == R || (cube->R)[2][2] == F || (cube->R)[2][2] == D))
-#define CBL()    (((cube->D)[2][0] == D || (cube->D)[2][0] == B || (cube ->D)[2][0] == L) && ((cube->B)[0][0] == B || (cube->B)[0][0] == L || (cube->B)[0][0] == D) && ((cube->L)[0][0] == L || (cube->L)[0][0] == B || (cube->L)[0][0] == D))
-#define CBR()    (((cube->D)[2][2] == D || (cube->D)[2][2] == B || (cube ->D)[2][2] == R) && ((cube->B)[0][2] == B || (cube->B)[0][2] == R || (cube->B)[0][2] == D) && ((cube->R)[0][2] == R || (cube->R)[0][2] == B || (cube->R)[0][2] == D))
 /*réalise la croix de la face du haut*/
-void croix_up(Cube *cube,listMouvement **liste) {
+void croix_up(Cube *cube,listMouvement *liste) {
     while ((cube->U)[0][1] != U || (cube->U)[1][0] != U || (cube->U)[1][2] != U || (cube->U)[2][1] != U
     || (cube -> F)[0][1] != F || (cube -> L)[1][2] != L || (cube->R)[1][0] != R || (cube->B)[2][1] != B)
     {
@@ -51,7 +28,7 @@ void croix_up(Cube *cube,listMouvement **liste) {
     }
 }
 //met les coins blancs a leur place
-void coin_up(Cube *cube,listMouvement **liste) {
+void coin_up(Cube *cube,listMouvement *liste) {
     while ((cube->U)[0][0] != U|| (cube->U)[0][2] != U || (cube->U)[2][0] != U||(cube->U)[2][2] != U
     || (cube->L)[0][2] !=L || (cube->L)[2][2] != L || (cube->F)[0][0] !=  F || (cube->F)[0][2] != F ||
     (cube->R)[0][0] != R || (cube->R)[2][0] != R || (cube->B)[2][0] != B || (cube->B)[2][2] != B) {
@@ -75,7 +52,7 @@ void coin_up(Cube *cube,listMouvement **liste) {
     }
 }
 //forme la 2 deuxieme couche
-void F2L(Cube *cube,listMouvement **liste) {
+void F2L(Cube *cube,listMouvement *liste) {
     while ( (cube->F)[1][2] != F || (cube->F)[1][0] != F || (cube->B)[1][0] != B || (cube->B)[1][2] != B ||
     (cube->R)[2][1] != R || (cube->R)[0][1] != R ||(cube->L)[2][1] != L || (cube->L)[0][1] != L) {
         if ( (cube->F)[2][1] == F && (cube->D)[0][1] == R) {DP();RP();D();R();D();F();DP();FP();}
@@ -106,7 +83,7 @@ void F2L(Cube *cube,listMouvement **liste) {
     }
 }
 //forme la croix du bas
-void croix_down(Cube *cube,listMouvement **liste) {
+void croix_down(Cube *cube,listMouvement *liste) {
     while ( (cube->D)[0][1] != D || (cube->D)[2][1] != D || (cube->D)[1][0] != D || (cube->D)[1][2] != D) {
         if (((cube->D)[0][1] == D && (cube->D)[2][1] == D) || ((cube->D)[1][2] == D && (cube->D)[2][1] == D) ||
         ((cube->D)[1][0] == D && (cube->D)[2][1] == D) || ((cube->D)[0][1] == D && (cube->D)[1][2] == D)) {D();}
@@ -114,7 +91,7 @@ void croix_down(Cube *cube,listMouvement **liste) {
     }
 }
 //fait correspondre la croix du bas avec avec les pieces centrales
-void edge_down(Cube *cube,listMouvement **liste) {
+void edge_down(Cube *cube,listMouvement *liste) {
     while ( (cube->F)[2][1] != F || (cube->B)[0][1] != B || (cube->L)[1][0] != L || (cube->R)[1][2] != R) {
         if ( ((cube->L)[1][0] == F && (cube->F)[2][1] == L) || ((cube -> B)[0][1] == F && (cube->F)[2][1] == B)) {
             B();D();BP();D();B();D2();BP();D();
@@ -128,7 +105,7 @@ void edge_down(Cube *cube,listMouvement **liste) {
     }
 }
 //place les coins du bas au bon endroit
-void corner_down(Cube *cube,listMouvement **liste) {
+void corner_down(Cube *cube,listMouvement *liste) {
     if (CFL() && CFR() && CBL() && CBR()) {
         //pass
     }
@@ -164,7 +141,7 @@ void corner_down(Cube *cube,listMouvement **liste) {
     }
 }
 //oriente les coins du bas
-void orient_down(Cube *cube,listMouvement **liste) {
+void orient_down(Cube *cube,listMouvement *liste) {
     int i=0;
     while ( (cube->D)[0][0] != D || (cube->D)[0][2] != D || (cube->D)[2][0] != D || (cube->D)[2][2] != D) {
         while ( (cube->D)[0][0] != D ) {
@@ -179,36 +156,50 @@ void orient_down(Cube *cube,listMouvement **liste) {
     }
 }
 //ajoute a une liste chaine un mouvement
-void append_mov(listMouvement **liste,const char *mov) {
-    listMouvement *m = malloc(sizeof(listMouvement));
+void append_mov(listMouvement *liste,const char *mov) {
+    maillon *m = malloc(sizeof(maillon));
+    m->next = liste->head;
     m->mov = mov;
-    m->next = *liste;
-    *liste = m; 
+    if (liste->head == NULL) {
+        liste->head = m;
+        liste->tail = m;
+        m -> prev = NULL;
+    }
+    else {
+        liste->head->prev = m;
+        liste->head = m;
+    }
 }
 //affiche les mouvements de la liste chaine
 void affiche_mov(listMouvement *liste) {
-    if (liste != NULL) {
-        affiche_mov(liste->next);
-        printf("%s",liste->mov);
+    maillon *m = liste->tail;
+    while (m!=NULL) {
+        printf("%s",m->mov);
+        m = m->prev;
     }
+    printf("\n");
 }
-void freeList(listMouvement **liste) {
-    if (*liste != NULL) {
-        freeList(&((*liste)->next));
-        free(*liste);
+void freeList(listMouvement *liste) {
+    maillon *m = liste->head;
+    maillon *m2;
+    while (m != NULL) {
+        m2 = m->prev;
+        free(m);
+        m=m2;
     }
+    free(liste);
 }
 //solve cube
 void solve_cube(Cube *cube) {
-    listMouvement *liste = NULL;
-    croix_up(cube,&liste);
-    coin_up(cube,&liste);
-    F2L(cube,&liste);
-    croix_down(cube,&liste);
-    edge_down(cube,&liste);
-    corner_down(cube,&liste);
-    orient_down(cube,&liste);
+    listMouvement *liste = malloc(sizeof(listMouvement));
+    croix_up(cube,liste);
+    coin_up(cube,liste);
+    F2L(cube,liste);
+    croix_down(cube,liste);
+    edge_down(cube,liste);
+    corner_down(cube,liste);
+    orient_down(cube,liste);
     affiche_mov(liste);
     printf("\n");
-    freeList(&liste);
+    freeList(liste);
 }
