@@ -1,15 +1,7 @@
 #ifndef __SOLVEUR__H__
 #define __SOLVEUR__H__
 #include "rubiksCube.h"
-typedef struct maillon {
-    const char *mov;
-    struct maillon *next;
-    struct maillon *prev;
-} maillon;
-typedef struct  {
-    maillon *head;
-    maillon *tail;
-} listMouvement;
+#include "listMovement.h"
 #define elif else if
 #define F() f(cube);append_mov(liste,"F")
 #define R() r(cube);append_mov(liste,"R")
@@ -41,6 +33,4 @@ extern void edge_down(Cube *,listMouvement *);
 extern void corner_down(Cube *,listMouvement *);
 extern void orient_down(Cube *,listMouvement *);
 extern void solve_cube(Cube *);
-extern void append_mov(listMouvement *,const char *);
-extern void affiche_mov(listMouvement *);
 #endif  //!__SOLVEUR__H__
