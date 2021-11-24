@@ -1,6 +1,7 @@
 #ifndef __GUIRUBIKSCUBE__H__
 #define __GUIRUBIKSCUBE__H__
 #include <SDL.h>
+#include "rubiksCube.h"
 #include <stdio.h>
 #include <stdlib.h>
 #define PADDING 20
