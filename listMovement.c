@@ -2,6 +2,10 @@
 //ajoute a une liste chaine un mouvement
 void append_mov(listMouvement *liste,const char *mov) {
     maillon *m = malloc(sizeof(maillon));
+    if (!m) {
+        fprintf(stderr,"erreur initialisation du maillon");
+        exit(1);
+    }
     m->next = liste->head;
     m->mov = mov;
     if (liste->head == NULL) {

@@ -1,12 +1,21 @@
 #include "solveur.h"
+#include "guiRubiksCube.h"
 Cube *initCube() {
     Cube *cube = malloc(sizeof(Cube));
+    if (!cube) {
+        fprintf(stderr,"erreur memoire initialisation cube");
+        exit(1);
+    }
     cube->U = malloc(sizeof(couleur *) * 3);
     cube->D = malloc(sizeof(couleur *) * 3);
     cube->B = malloc(sizeof(couleur *) * 3);
     cube->F = malloc(sizeof(couleur *) * 3);
     cube->L = malloc(sizeof(couleur *) * 3);
     cube->R = malloc(sizeof(couleur *) * 3);
+    if (!(cube->R && cube->U && cube->D && cube->B && cube->F && cube->L)) {
+        fprintf(stderr,"erreur memoire initialisation cube");
+        exit(1);
+    }
     int i,j;
     for (i=0;i<3;i++) {
         cube->U[i] = malloc(sizeof(couleur) * 3);
@@ -15,6 +24,10 @@ Cube *initCube() {
         cube->F[i] = malloc(sizeof(couleur) * 3);
         cube->L[i] = malloc(sizeof(couleur) * 3);
         cube->R[i] = malloc(sizeof(couleur) * 3);
+        if (!( (cube->R)[i] && (cube->U)[i] && (cube->D)[i] && (cube->B)[i] && (cube->F)[i] && (cube->L)[i])) {
+        fprintf(stderr,"erreur memoire initialisation cube");
+        exit(1);
+        }
         for(j=0;j<3;j++) {
             cube->U[i][j] = U;
             cube->D[i][j] = D;
