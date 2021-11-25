@@ -34,8 +34,7 @@ void initGui(Cube *cube,maillon *m)
                     next(cube,&m,renderer,&cubeFinie);
                     break;
                   case SDLK_z:
-                    cubeFinie = 0;
-                    prev(cube,&m,renderer);
+                    prev(cube,&m,renderer,&cubeFinie);
                     break;
                   default:
                     break;
@@ -200,10 +199,16 @@ void next(Cube *cube,maillon **m,SDL_Renderer *r,int *cubeFini) {
         majWindow(cube,r);
     }
 }
-void prev(Cube *cube,maillon **m,SDL_Renderer *r) {
+void prev(Cube *cube,maillon **m,SDL_Renderer *r,int *cubeFini) {
     if (*m && (*m)->next) {
-        sToRorI(cube,(*m)->mov);
-        *m = (*m)->next;
+        if (*cubeFini == 1) {
+            sToRorI(cube,(*m)->mov);
+            *cubeFini = 0;
+        }
+        else {
+            *m = (*m)->next;
+            sToRorI(cube,(*m)->mov);
+        }
         majWindow(cube,r);
     }
 }

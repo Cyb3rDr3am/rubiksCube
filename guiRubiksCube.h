@@ -40,5 +40,5 @@ extern void sToRor(Cube *,const char *);
 extern void sToRorI(Cube *,const char *);
 extern void annuleDeplace(Cube *,maillon *);
 extern void next(Cube *,maillon **,SDL_Renderer *,int *);
-extern void prev(Cube *,maillon **,SDL_Renderer *);
+extern void prev(Cube *,maillon **,SDL_Renderer *,int *);
 #endif  //!__GUIRUBIKSCUBE__H__
