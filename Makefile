@@ -15,8 +15,8 @@ listMovement.o: listMovement.c listMovement.h
 guiRubiksCube.o: guiRubiksCube.c guiRubiksCube.h rubiksCube.h
 	${CC} ${CFLAGS}  -c $< $(SDL_CFLAGS) $(SDL_LDFLAGS)
 main.o: main.c solveur.h
-	${CC} ${CFLAGS} -c $<
+	${CC} ${CFLAGS} -c $< $(SDL_CFLAGS) $(SDL_LDFLAGS)
 main: main.o faceRotation.o solveur.o listMovement.o guiRubiksCube.o
-	${CC} ${CFLAGS} $^ -o $@
+	${CC} ${CFLAGS} $^ -o $@ $(SDL_CFLAGS) $(SDL_LDFLAGS)
 clean:
 	@rm -f *.o

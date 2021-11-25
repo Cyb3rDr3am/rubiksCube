@@ -14,7 +14,12 @@
 #define CB 0,0,255,SDL_ALPHA_OPAQUE
 #define CY 255,255,0,SDL_ALPHA_OPAQUE  
 #define CO 255,165,0,SDL_ALPHA_OPAQUE
-extern void  init();
+#define CBL 0,0,0,SDL_ALPHA_OPAQUE
+#define SET_COLOR(r,c) if (SDL_SetRenderDrawColor(r,c) != 0) {\
+    SDL_ExitWithError("cube initialization fail");\
+}
+extern void  initGui();
 extern void  SDL_ExitWithError(const char *);
 extern void drawCube(Cube *,SDL_Renderer *);
+extern void setCouleurFace(couleur,SDL_Renderer *);
 #endif  //!__GUIRUBIKSCUBE__H__
