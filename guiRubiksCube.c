@@ -138,7 +138,9 @@ void drawCube(Cube *cube, SDL_Renderer *r)
 }
 void majWindow(Cube *cube,SDL_Renderer *renderer) {
     SET_COLOR(renderer,CN);
-    SDL_RenderClear(renderer);
+    if (SDL_RenderClear(renderer) != 0) {
+        SDL_ExitWithError("cube drawing fail");
+    }
     drawCube(cube,renderer);
     SDL_RenderPresent(renderer);
 }
