@@ -96,10 +96,9 @@ void afficheMenu() {
 int main(void) {
     FILE *f = fopen("rubiksCube.txt","w");
     Cube *cube = initCube();
-    //randomizeCube(cube);
-    initGui(cube);
     int continuer = 1;
     int action;
+    listMouvement *liste;
     while (continuer)
     {
         afficheMenu();
@@ -120,8 +119,16 @@ int main(void) {
             printf("cube enregistrée \n");
             break;
         case 2:
-            printf("Mouvement réalisée : \n");
-            solve_cube(cube);
+            liste = solve_cube(cube);
+            if (liste->head) {
+                printf("Mouvement réalisée : \n");
+                initGui(cube,liste->tail);
+                affiche_mov(liste);
+                freeList(liste);
+            }
+            else {
+                printf("cube deja resolue \n");
+            }
             break;
         case 3:
             randomizeCube(cube);

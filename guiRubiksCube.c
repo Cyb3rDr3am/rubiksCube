@@ -1,7 +1,6 @@
 #include "guiRubiksCube.h"
-#include "rubiksCube.h"
 
-void initGui(Cube *cube)
+void initGui(Cube *cube,maillon *m)
 {
     SDL_Window *window;
     SDL_Renderer *renderer = NULL;
@@ -19,9 +18,37 @@ void initGui(Cube *cube)
     {
         SDL_ExitWithError("Window initialization fail");
     }
-    drawCube(cube,renderer);
-    SDL_RenderPresent(renderer);
-    SDL_Delay(3000);
+    SDL_bool program_launched = SDL_TRUE;
+    annuleDeplace(cube,m);
+    majWindow(cube,renderer);
+    SDL_Event event;
+    int cubeFinie = (m && m->prev)? 0:1;
+    while (program_launched) {
+        while (SDL_PollEvent(&event)) {
+            switch (event.type)
+            {
+              case SDL_KEYDOWN:
+                switch (event.key.keysym.sym)
+                {
+                  case SDLK_y:
+                    next(cube,&m,renderer,&cubeFinie);
+                    break;
+                  case SDLK_z:
+                    cubeFinie = 0;
+                    prev(cube,&m,renderer);
+                    break;
+                  default:
+                    break;
+                }
+                break;
+              case SDL_QUIT:
+                program_launched = SDL_FALSE;
+                break;
+              default:
+                break;
+            }
+        }
+    } 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
@@ -96,12 +123,7 @@ void drawCube(Cube *cube, SDL_Renderer *r)
         x = PADDING + 3 * (HEIGHT_SQUARE + SPACE_SQUARE);
         for (j = 0; j < 3; j++)
         {
-            rect.x = x;
-            rect.y = y;
-            x += HEIGHT_SQUARE + SPACE_SQUARE;
-            setCouleurFace((cube->F)[i][j],r);
-            SDL_RenderDrawRect(r, &rect);
-            SDL_RenderFillRect(r, &rect);
+            DRAWRECT(F);
         }
         y += HEIGHT_SQUARE + SPACE_SQUARE;
     }
@@ -110,13 +132,78 @@ void drawCube(Cube *cube, SDL_Renderer *r)
         x = PADDING + 3 * (HEIGHT_SQUARE + SPACE_SQUARE);
         for (j = 0; j < 3; j++)
         {
-            rect.x = x;
-            rect.y = y;
-            x += HEIGHT_SQUARE + SPACE_SQUARE;
-            setCouleurFace((cube->D)[i][j],r);
-            SDL_RenderDrawRect(r, &rect);
-            SDL_RenderFillRect(r, &rect);
+            DRAWRECT(D);
         }
         y += HEIGHT_SQUARE + SPACE_SQUARE;
+    }
+}
+void majWindow(Cube *cube,SDL_Renderer *renderer) {
+    SET_COLOR(renderer,CN);
+    SDL_RenderClear(renderer);
+    drawCube(cube,renderer);
+    SDL_RenderPresent(renderer);
+}
+void sToRor(Cube *cube,const char *mov) {
+    if (!strcmp(mov,"F")) {f(cube);}
+    else if (!strcmp(mov,"B")) {b(cube);}
+    else if (!strcmp(mov,"L")) {l(cube);}
+    else if (!strcmp(mov,"R")) {r(cube);}
+    else if (!strcmp(mov,"U")) {u(cube);}
+    else if (!strcmp(mov,"D")) {d(cube);}
+    else if (!strcmp(mov,"F'")) {fp(cube);}
+    else if (!strcmp(mov,"B'")) {bp(cube);}
+    else if (!strcmp(mov,"L'")) {lp(cube);}
+    else if (!strcmp(mov,"R'")) {rp(cube);}
+    else if (!strcmp(mov,"U'")) {up(cube);}
+    else if (!strcmp(mov,"D'")) {dp(cube);}
+    else if (!strcmp(mov,"F2")) {f(cube);f(cube);}
+    else if (!strcmp(mov,"B2")) {b(cube);b(cube);}
+    else if (!strcmp(mov,"L2")) {l(cube);l(cube);}
+    else if (!strcmp(mov,"R2")) {r(cube);r(cube);}
+    else if (!strcmp(mov,"U2")) {u(cube);u(cube);}
+    else if (!strcmp(mov,"D2")) {d(cube);d(cube);}
+}
+void sToRorI(Cube *cube,const char *mov) {
+    if (!strcmp(mov,"F")) {fp(cube);}
+    else if (!strcmp(mov,"B")) {bp(cube);}
+    else if (!strcmp(mov,"L")) {lp(cube);}
+    else if (!strcmp(mov,"R")) {rp(cube);}
+    else if (!strcmp(mov,"U")) {up(cube);}
+    else if (!strcmp(mov,"D")) {dp(cube);}
+    else if (!strcmp(mov,"F'")) {f(cube);}
+    else if (!strcmp(mov,"B'")) {b(cube);}
+    else if (!strcmp(mov,"L'")) {l(cube);}
+    else if (!strcmp(mov,"R'")) {r(cube);}
+    else if (!strcmp(mov,"U'")) {u(cube);}
+    else if (!strcmp(mov,"D'")) {d(cube);}
+    else if (!strcmp(mov,"F2")) {f(cube);f(cube);}
+    else if (!strcmp(mov,"B2")) {b(cube);b(cube);}
+    else if (!strcmp(mov,"L2")) {l(cube);l(cube);}
+    else if (!strcmp(mov,"R2")) {r(cube);r(cube);}
+    else if (!strcmp(mov,"U2")) {u(cube);u(cube);}
+    else if (!strcmp(mov,"D2")) {d(cube);d(cube);}
+}
+void annuleDeplace(Cube *cube,maillon *m) {
+    while (m->prev!=NULL) m = m->prev;
+    while (m!=NULL) {
+        sToRorI(cube,m->mov);
+        m = m->next;
+    }
+}
+void next(Cube *cube,maillon **m,SDL_Renderer *r,int *cubeFini) {
+    if (*cubeFini == 0) {
+        sToRor(cube,(*m)->mov);
+        if ((*m)->prev) {
+            *m = (*m)->prev;
+        }
+        else *cubeFini = 1;
+        majWindow(cube,r);
+    }
+}
+void prev(Cube *cube,maillon **m,SDL_Renderer *r) {
+    if (*m && (*m)->next) {
+        sToRorI(cube,(*m)->mov);
+        *m = (*m)->next;
+        majWindow(cube,r);
     }
 }

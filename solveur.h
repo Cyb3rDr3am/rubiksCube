@@ -32,5 +32,5 @@ extern void croix_down(Cube *,listMouvement *);
 extern void edge_down(Cube *,listMouvement *);
 extern void corner_down(Cube *,listMouvement *);
 extern void orient_down(Cube *,listMouvement *);
-extern void solve_cube(Cube *);
+listMouvement *solve_cube(Cube *);
 #endif  //!__SOLVEUR__H__

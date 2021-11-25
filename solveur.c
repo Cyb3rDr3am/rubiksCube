@@ -157,7 +157,7 @@ void orient_down(Cube *cube,listMouvement *liste) {
 }
 
 //solve cube
-void solve_cube(Cube *cube) {
+listMouvement *solve_cube(Cube *cube) {
     listMouvement *liste = malloc(sizeof(listMouvement));
     croix_up(cube,liste);
     coin_up(cube,liste);
@@ -166,7 +166,5 @@ void solve_cube(Cube *cube) {
     edge_down(cube,liste);
     corner_down(cube,liste);
     orient_down(cube,liste);
-    affiche_mov(liste);
-    printf("\n");
-    freeList(liste);
+    return liste;
 }

@@ -4,6 +4,8 @@
 #include "rubiksCube.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "listMovement.h"
 #define PADDING 20
 #define HEIGHT_SQUARE 40
 #define SPACE_SQUARE 2
@@ -15,6 +17,7 @@
 #define CB 0,0,255,SDL_ALPHA_OPAQUE
 #define CY 255,255,0,SDL_ALPHA_OPAQUE  
 #define CO 255,165,0,SDL_ALPHA_OPAQUE
+#define CN 0,0,0,SDL_ALPHA_OPAQUE
 #define DRAWRECT(f)  rect.x = x; \
             rect.y = y;\
             x += HEIGHT_SQUARE + SPACE_SQUARE;\
@@ -32,4 +35,10 @@ extern void  initGui();
 extern void  SDL_ExitWithError(const char *);
 extern void drawCube(Cube *,SDL_Renderer *);
 extern void setCouleurFace(couleur,SDL_Renderer *);
+extern void majWindow(Cube *,SDL_Renderer *);
+extern void sToRor(Cube *,const char *);
+extern void sToRorI(Cube *,const char *);
+extern void annuleDeplace(Cube *,maillon *);
+extern void next(Cube *,maillon **,SDL_Renderer *,int *);
+extern void prev(Cube *,maillon **,SDL_Renderer *);
 #endif  //!__GUIRUBIKSCUBE__H__

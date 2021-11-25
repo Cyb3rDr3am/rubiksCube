@@ -7,6 +7,7 @@ void append_mov(listMouvement *liste,const char *mov) {
         exit(1);
     }
     m->next = liste->head;
+    m->prev = NULL;
     m->mov = mov;
     if (liste->head == NULL) {
         liste->head = m;
