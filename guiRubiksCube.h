@@ -15,6 +15,16 @@
 #define CB 0,0,255,SDL_ALPHA_OPAQUE
 #define CY 255,255,0,SDL_ALPHA_OPAQUE  
 #define CO 255,165,0,SDL_ALPHA_OPAQUE
+#define DRAWRECT(f)  rect.x = x; \
+            rect.y = y;\
+            x += HEIGHT_SQUARE + SPACE_SQUARE;\
+            setCouleurFace((cube->f )[i][j],r);\
+            if (SDL_RenderDrawRect(r, &rect) != 0) {\
+                SDL_ExitWithError("cube drawing fail");\
+            };\
+            if (SDL_RenderFillRect(r, &rect) != 0) {\
+                SDL_ExitWithError("cube drawing fail");\
+            }
 #define SET_COLOR(r,c) if (SDL_SetRenderDrawColor(r,c) != 0) {\
     SDL_ExitWithError("cube initialization fail");\
 }

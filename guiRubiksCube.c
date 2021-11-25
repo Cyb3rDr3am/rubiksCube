@@ -69,12 +69,7 @@ void drawCube(Cube *cube, SDL_Renderer *r)
         x = PADDING + 3 * (HEIGHT_SQUARE + SPACE_SQUARE);
         for (j = 0; j < 3; j++)
         {
-            rect.x = x;
-            rect.y = y;
-            x += HEIGHT_SQUARE + SPACE_SQUARE;
-            setCouleurFace((cube->B)[i][j],r);
-            SDL_RenderDrawRect(r, &rect);
-            SDL_RenderFillRect(r, &rect);
+            DRAWRECT(B);
         }
         y += HEIGHT_SQUARE + SPACE_SQUARE;
     }
@@ -83,28 +78,13 @@ void drawCube(Cube *cube, SDL_Renderer *r)
         for (k=0;k<3;k++) {
             for(j=0;j<3;j++) {
                 if (k==0) {
-                    rect.x = x;
-                    rect.y = y;
-                    x += HEIGHT_SQUARE + SPACE_SQUARE;
-                    setCouleurFace((cube->L)[i][j],r);
-                    SDL_RenderDrawRect(r, &rect);
-                    SDL_RenderFillRect(r, &rect);
+                    DRAWRECT(L);
                 }
                 else if (k==1) {
-                    rect.x = x;
-                    rect.y = y;
-                    x += HEIGHT_SQUARE + SPACE_SQUARE;
-                    setCouleurFace((cube->U)[i][j],r);
-                    SDL_RenderDrawRect(r, &rect);
-                    SDL_RenderFillRect(r, &rect);                    
+                    DRAWRECT(U);                   
                 }
                 else {
-                    rect.x = x;
-                    rect.y = y;
-                    x += HEIGHT_SQUARE + SPACE_SQUARE;
-                    setCouleurFace((cube->R)[i][j],r);
-                    SDL_RenderDrawRect(r, &rect);
-                    SDL_RenderFillRect(r, &rect); 
+                    DRAWRECT(R); 
                 }
             }
         }

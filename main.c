@@ -96,6 +96,7 @@ void afficheMenu() {
 int main(void) {
     FILE *f = fopen("rubiksCube.txt","w");
     Cube *cube = initCube();
+    //randomizeCube(cube);
     initGui(cube);
     int continuer = 1;
     int action;
