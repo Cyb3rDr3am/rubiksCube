@@ -61,48 +61,82 @@ void setCouleurFace(couleur c, SDL_Renderer *r)
 void drawCube(Cube *cube, SDL_Renderer *r)
 {
     SDL_Rect rect;
-    int x = PADDING + 3 * HEIGHT_SQUARE;
-    int y = PADDING;
-    int i, j; // k;
+    rect.h = rect.w = HEIGHT_SQUARE;
+    int x,y=0;
+    int i, j, k;
     for (i = 0; i < 3; i++)
     {
+        x = PADDING + 3 * (HEIGHT_SQUARE + SPACE_SQUARE);
         for (j = 0; j < 3; j++)
         {
-            rect.h = rect.w = HEIGHT_SQUARE;
             rect.x = x;
             rect.y = y;
-            x += HEIGHT_SQUARE;
-            setCouleurFace((cube->U)[i][j],r);
+            x += HEIGHT_SQUARE + SPACE_SQUARE;
+            setCouleurFace((cube->B)[i][j],r);
             SDL_RenderDrawRect(r, &rect);
             SDL_RenderFillRect(r, &rect);
         }
-        y += HEIGHT_SQUARE;
-        x = PADDING + 3 * HEIGHT_SQUARE;
+        y += HEIGHT_SQUARE + SPACE_SQUARE;
     }
-    // for (i=0;i<3;i++) {
-    //     for (k=0;k<3;k++) {
-    //         for(j=0;j<3;j++) {
-    //             if (k==0) fprintf(f,"%c",(cube->L)[i][j]);
-    //             else if (k==1) fprintf(f,"%c",(cube->U)[i][j]);
-    //             else fprintf(f,"%c",(cube->R)[i][j]);
-    //         }
-    //     }
-    //     fprintf(f,"\n");
-    // }
-    // for (i=0;i<3;i++) {
-    //     fprintf(f,"   ");
-    //     for(j=0;j<3;j++) {
-    //         fprintf(f,"%c",(cube->F)[i][j]);
-    //     }
-    //     fprintf(f,"   ");
-    //     fprintf(f,"\n");
-    // }
-    // for (i=0;i<3;i++) {
-    //     fprintf(f,"   ");
-    //     for(j=0;j<3;j++) {
-    //         fprintf(f,"%c",(cube->D)[i][j]);
-    //     }
-    //     fprintf(f,"   ");
-    //     fprintf(f,"\n");
-    // }
+    x = PADDING;
+    for (i=0;i<3;i++) {
+        for (k=0;k<3;k++) {
+            for(j=0;j<3;j++) {
+                if (k==0) {
+                    rect.x = x;
+                    rect.y = y;
+                    x += HEIGHT_SQUARE + SPACE_SQUARE;
+                    setCouleurFace((cube->L)[i][j],r);
+                    SDL_RenderDrawRect(r, &rect);
+                    SDL_RenderFillRect(r, &rect);
+                }
+                else if (k==1) {
+                    rect.x = x;
+                    rect.y = y;
+                    x += HEIGHT_SQUARE + SPACE_SQUARE;
+                    setCouleurFace((cube->U)[i][j],r);
+                    SDL_RenderDrawRect(r, &rect);
+                    SDL_RenderFillRect(r, &rect);                    
+                }
+                else {
+                    rect.x = x;
+                    rect.y = y;
+                    x += HEIGHT_SQUARE + SPACE_SQUARE;
+                    setCouleurFace((cube->R)[i][j],r);
+                    SDL_RenderDrawRect(r, &rect);
+                    SDL_RenderFillRect(r, &rect); 
+                }
+            }
+        }
+        y += HEIGHT_SQUARE + SPACE_SQUARE;
+        x = PADDING;
+    }
+    for (i = 0; i < 3; i++)
+    {
+        x = PADDING + 3 * (HEIGHT_SQUARE + SPACE_SQUARE);
+        for (j = 0; j < 3; j++)
+        {
+            rect.x = x;
+            rect.y = y;
+            x += HEIGHT_SQUARE + SPACE_SQUARE;
+            setCouleurFace((cube->F)[i][j],r);
+            SDL_RenderDrawRect(r, &rect);
+            SDL_RenderFillRect(r, &rect);
+        }
+        y += HEIGHT_SQUARE + SPACE_SQUARE;
+    }
+    for (i = 0; i < 3; i++)
+    {
+        x = PADDING + 3 * (HEIGHT_SQUARE + SPACE_SQUARE);
+        for (j = 0; j < 3; j++)
+        {
+            rect.x = x;
+            rect.y = y;
+            x += HEIGHT_SQUARE + SPACE_SQUARE;
+            setCouleurFace((cube->D)[i][j],r);
+            SDL_RenderDrawRect(r, &rect);
+            SDL_RenderFillRect(r, &rect);
+        }
+        y += HEIGHT_SQUARE + SPACE_SQUARE;
+    }
 }
