@@ -20,9 +20,9 @@ void initGui(Cube *cube,maillon *m)
     }
     SDL_bool program_launched = SDL_TRUE;
     annuleDeplace(cube,m);
-    majWindow(cube,renderer);
-    SDL_Event event;
     int cubeFinie = (m && m->prev)? 0:1;
+    majWindow(cube,renderer,m,cubeFinie);
+    SDL_Event event;
     while (program_launched) {
         while (SDL_PollEvent(&event)) {
             switch (event.type)
@@ -84,11 +84,11 @@ void setCouleurFace(couleur c, SDL_Renderer *r)
         break;
     }
 }
-void drawCube(Cube *cube, SDL_Renderer *r)
+void drawCube(Cube *cube, SDL_Renderer *r,maillon *m,int cubeFinie)
 {
     SDL_Rect rect;
     rect.h = rect.w = HEIGHT_SQUARE;
-    int x,y=0;
+    int x,y=PADDING;
     int i, j, k;
     for (i = 0; i < 3; i++)
     {
@@ -135,13 +135,40 @@ void drawCube(Cube *cube, SDL_Renderer *r)
         }
         y += HEIGHT_SQUARE + SPACE_SQUARE;
     }
+    rect.h = 4*HEIGHT_SQUARE;
+    rect.w = 4*HEIGHT_SQUARE;
+    SET_COLOR(r,CR);
+    rect.x = x + 5 * (HEIGHT_SQUARE + SPACE_SQUARE);
+    rect.y = y/2;
+    SDL_RenderDrawRect(r, &rect);
+    char txt[100];
+    const char *prev;
+    const char *next;
+    if (cubeFinie) {
+        if (m) {prev = m->mov;}
+        else {prev = "";}
+        next = "";
+    }
+    else {
+        if (m) {
+            if (m->next) prev = m->next->mov;
+            else {prev = "";}
+            next = m->mov;
+        }
+        else {
+            next = "";
+            prev = "";
+        }
+    }
+    sprintf(txt,"next:%s\nprevius:%s\n",next,prev);
+    printf("%s\n",txt);
 }
-void majWindow(Cube *cube,SDL_Renderer *renderer) {
+void majWindow(Cube *cube,SDL_Renderer *renderer,maillon *m,int cubeFinie) {
     SET_COLOR(renderer,CN);
     if (SDL_RenderClear(renderer) != 0) {
         SDL_ExitWithError("cube drawing fail");
     }
-    drawCube(cube,renderer);
+    drawCube(cube,renderer,m,cubeFinie);
     SDL_RenderPresent(renderer);
 }
 void sToRor(Cube *cube,const char *mov) {
@@ -197,8 +224,8 @@ void next(Cube *cube,maillon **m,SDL_Renderer *r,int *cubeFini) {
         if ((*m)->prev) {
             *m = (*m)->prev;
         }
-        else *cubeFini = 1;
-        majWindow(cube,r);
+        else {*cubeFini = 1;}
+        majWindow(cube,r,*m,*cubeFini);
     }
 }
 void prev(Cube *cube,maillon **m,SDL_Renderer *r,int *cubeFini) {
@@ -211,6 +238,6 @@ void prev(Cube *cube,maillon **m,SDL_Renderer *r,int *cubeFini) {
             *m = (*m)->next;
             sToRorI(cube,(*m)->mov);
         }
-        majWindow(cube,r);
+        majWindow(cube,r,*m,*cubeFini);
     }
 }

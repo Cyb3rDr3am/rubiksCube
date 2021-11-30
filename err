@@ -1,0 +1,2 @@
+gcc -Wall -Werror -Wextra  -c guiRubiksCube.c -I/usr/include/SDL2 -D_REENTRANT -lSDL2
+gcc -Wall -Werror -Wextra main.o faceRotation.o solveur.o listMovement.o guiRubiksCube.o -o main -I/usr/include/SDL2 -D_REENTRANT -lSDL2

@@ -6,11 +6,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include "listMovement.h"
-#define PADDING 20
+#include <SDL2/SDL_ttf.h>
+#define PADDING 110
 #define HEIGHT_SQUARE 40
 #define SPACE_SQUARE 2
-#define HEIGHT_WINDOW (HEIGHT_SQUARE+SPACE_SQUARE) * 12 + PADDING
-#define WIDTH_WINDOW (HEIGHT_SQUARE+SPACE_SQUARE)*12 + PADDING
+#define HEIGHT_WINDOW (HEIGHT_SQUARE+SPACE_SQUARE) * 15 + PADDING
+#define WIDTH_WINDOW (HEIGHT_SQUARE+SPACE_SQUARE)*15 + PADDING
 #define CW 255,255,255,SDL_ALPHA_OPAQUE
 #define CR 255,0,0,SDL_ALPHA_OPAQUE
 #define CG 0,255,0,SDL_ALPHA_OPAQUE
@@ -33,9 +34,9 @@
 }
 extern void  initGui();
 extern void  SDL_ExitWithError(const char *);
-extern void drawCube(Cube *,SDL_Renderer *);
+extern void drawCube(Cube *,SDL_Renderer *,maillon *,int);
 extern void setCouleurFace(couleur,SDL_Renderer *);
-extern void majWindow(Cube *,SDL_Renderer *);
+extern void majWindow(Cube *,SDL_Renderer *,maillon *,int);
 extern void sToRor(Cube *,const char *);
 extern void sToRorI(Cube *,const char *);
 extern void annuleDeplace(Cube *,maillon *);
