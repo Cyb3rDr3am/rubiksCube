@@ -18,6 +18,11 @@ void initGui(Cube *cube,maillon *m)
     {
         SDL_ExitWithError("Window initialization fail");
     }
+    if(TTF_Init() == -1)   
+    {
+    fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
+    exit(EXIT_FAILURE);
+    }
     SDL_bool program_launched = SDL_TRUE;
     annuleDeplace(cube,m);
     int cubeFinie = (m && m->prev)? 0:1;
@@ -51,6 +56,7 @@ void initGui(Cube *cube,maillon *m)
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+    TTF_Quit();
 }
 void SDL_ExitWithError(const char *msg)
 {
@@ -160,8 +166,20 @@ void drawCube(Cube *cube, SDL_Renderer *r,maillon *m,int cubeFinie)
             prev = "";
         }
     }
+    TTF_Font *police = NULL;
+    SDL_Color textColor = { 255, 255, 255,255};
+    police = TTF_OpenFont("vogue.ttf", 65);
+    if (police == NULL) {
+        SDL_ExitWithError("erreur initialisation police");
+    }
     sprintf(txt,"next:%s\nprevius:%s\n",next,prev);
-    printf("%s\n",txt);
+    SDL_Surface *texte = TTF_RenderText_Solid(police,txt, textColor);
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(r,texte);
+    SDL_QueryTexture(texture,NULL,NULL,&rect.w,&rect.h);
+    SDL_RenderCopy(r,texture,NULL,&rect);
+    SDL_FreeSurface(texte);
+    TTF_CloseFont(police);
+
 }
 void majWindow(Cube *cube,SDL_Renderer *renderer,maillon *m,int cubeFinie) {
     SET_COLOR(renderer,CN);
