@@ -159,6 +159,8 @@ void orient_down(Cube *cube,listMouvement *liste) {
 //solve cube
 listMouvement *solve_cube(Cube *cube) {
     listMouvement *liste = malloc(sizeof(listMouvement));
+    liste->head = NULL;
+    liste->tail = NULL;
     croix_up(cube,liste);
     coin_up(cube,liste);
     F2L(cube,liste);

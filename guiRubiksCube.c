@@ -141,7 +141,7 @@ void drawCube(Cube *cube, SDL_Renderer *r,maillon *m,int cubeFinie)
         }
         y += HEIGHT_SQUARE + SPACE_SQUARE;
     }
-    rect.h = 4*HEIGHT_SQUARE;
+    rect.h = 50;
     rect.w = 4*HEIGHT_SQUARE;
     SET_COLOR(r,CR);
     rect.x = x + 5 * (HEIGHT_SQUARE + SPACE_SQUARE);
@@ -168,9 +168,10 @@ void drawCube(Cube *cube, SDL_Renderer *r,maillon *m,int cubeFinie)
     }
     TTF_Font *police = NULL;
     SDL_Color textColor = { 255, 255, 255,255};
-    police = TTF_OpenFont("vogue.ttf", 65);
+    police = TTF_OpenFont("font.otf",15);
     if (police == NULL) {
-        SDL_ExitWithError("erreur initialisation police");
+        fprintf(stderr, "Erreur d'initialisation la police : %s\n", TTF_GetError());
+        exit(EXIT_FAILURE);
     }
     sprintf(txt,"next:%s\nprevius:%s\n",next,prev);
     SDL_Surface *texte = TTF_RenderText_Solid(police,txt, textColor);
