@@ -26,7 +26,9 @@ void initGui(Cube *cube,maillon *m)
     SDL_bool program_launched = SDL_TRUE;
     annuleDeplace(cube,m);
     int cubeFinie = (m && m->prev)? 0:1;
-    majWindow(cube,renderer,m,cubeFinie);
+    TTF_Font *police = NULL;
+    police = TTF_OpenFont("font.otf",15);
+    majWindow(cube,renderer,m,cubeFinie,police);
     SDL_Event event;
     while (program_launched) {
         while (SDL_PollEvent(&event)) {
@@ -36,10 +38,10 @@ void initGui(Cube *cube,maillon *m)
                 switch (event.key.keysym.sym)
                 {
                   case SDLK_y:
-                    next(cube,&m,renderer,&cubeFinie);
+                    next(cube,&m,renderer,&cubeFinie,police);
                     break;
                   case SDLK_z:
-                    prev(cube,&m,renderer,&cubeFinie);
+                    prev(cube,&m,renderer,&cubeFinie,police);
                     break;
                   default:
                     break;
@@ -52,7 +54,8 @@ void initGui(Cube *cube,maillon *m)
                 break;
             }
         }
-    } 
+    }
+    TTF_CloseFont(police);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
@@ -90,7 +93,7 @@ void setCouleurFace(couleur c, SDL_Renderer *r)
         break;
     }
 }
-void drawCube(Cube *cube, SDL_Renderer *r,maillon *m,int cubeFinie)
+void drawCube(Cube *cube, SDL_Renderer *r,maillon *m,int cubeFinie,TTF_Font *police)
 {
     SDL_Rect rect;
     rect.h = rect.w = HEIGHT_SQUARE;
@@ -166,9 +169,7 @@ void drawCube(Cube *cube, SDL_Renderer *r,maillon *m,int cubeFinie)
             prev = "";
         }
     }
-    TTF_Font *police = NULL;
     SDL_Color textColor = { 255, 255, 255,255};
-    police = TTF_OpenFont("font.otf",15);
     if (police == NULL) {
         fprintf(stderr, "Erreur d'initialisation la police : %s\n", TTF_GetError());
         exit(EXIT_FAILURE);
@@ -179,15 +180,14 @@ void drawCube(Cube *cube, SDL_Renderer *r,maillon *m,int cubeFinie)
     SDL_QueryTexture(texture,NULL,NULL,&rect.w,&rect.h);
     SDL_RenderCopy(r,texture,NULL,&rect);
     SDL_FreeSurface(texte);
-    TTF_CloseFont(police);
 
 }
-void majWindow(Cube *cube,SDL_Renderer *renderer,maillon *m,int cubeFinie) {
+void majWindow(Cube *cube,SDL_Renderer *renderer,maillon *m,int cubeFinie,TTF_Font *police) {
     SET_COLOR(renderer,CN);
     if (SDL_RenderClear(renderer) != 0) {
         SDL_ExitWithError("cube drawing fail");
     }
-    drawCube(cube,renderer,m,cubeFinie);
+    drawCube(cube,renderer,m,cubeFinie,police);
     SDL_RenderPresent(renderer);
 }
 void sToRor(Cube *cube,const char *mov) {
@@ -237,17 +237,17 @@ void annuleDeplace(Cube *cube,maillon *m) {
         m = m->next;
     }
 }
-void next(Cube *cube,maillon **m,SDL_Renderer *r,int *cubeFini) {
+void next(Cube *cube,maillon **m,SDL_Renderer *r,int *cubeFini,TTF_Font *police) {
     if (*cubeFini == 0) {
         sToRor(cube,(*m)->mov);
         if ((*m)->prev) {
             *m = (*m)->prev;
         }
         else {*cubeFini = 1;}
-        majWindow(cube,r,*m,*cubeFini);
+        majWindow(cube,r,*m,*cubeFini,police);
     }
 }
-void prev(Cube *cube,maillon **m,SDL_Renderer *r,int *cubeFini) {
+void prev(Cube *cube,maillon **m,SDL_Renderer *r,int *cubeFini,TTF_Font *police) {
     if (*m && (*m)->next) {
         if (*cubeFini == 1) {
             sToRorI(cube,(*m)->mov);
@@ -257,6 +257,6 @@ void prev(Cube *cube,maillon **m,SDL_Renderer *r,int *cubeFini) {
             *m = (*m)->next;
             sToRorI(cube,(*m)->mov);
         }
-        majWindow(cube,r,*m,*cubeFini);
+        majWindow(cube,r,*m,*cubeFini,police);
     }
 }

@@ -34,12 +34,12 @@
 }
 extern void  initGui();
 extern void  SDL_ExitWithError(const char *);
-extern void drawCube(Cube *,SDL_Renderer *,maillon *,int);
+extern void drawCube(Cube *,SDL_Renderer *,maillon *,int,TTF_Font *);
 extern void setCouleurFace(couleur,SDL_Renderer *);
-extern void majWindow(Cube *,SDL_Renderer *,maillon *,int);
+extern void majWindow(Cube *,SDL_Renderer *,maillon *,int,TTF_Font *);
 extern void sToRor(Cube *,const char *);
 extern void sToRorI(Cube *,const char *);
 extern void annuleDeplace(Cube *,maillon *);
-extern void next(Cube *,maillon **,SDL_Renderer *,int *);
-extern void prev(Cube *,maillon **,SDL_Renderer *,int *);
+extern void next(Cube *,maillon **,SDL_Renderer *,int *,TTF_Font *);
+extern void prev(Cube *,maillon **,SDL_Renderer *,int *,TTF_Font *);
 #endif  //!__GUIRUBIKSCUBE__H__
