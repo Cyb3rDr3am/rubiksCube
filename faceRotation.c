@@ -1,4 +1,5 @@
 #include "rubiksCube.h"
+//rotate face to right
 void rd(Face f) {
     int i,j;
     couleur oldF[3][3];
@@ -13,6 +14,7 @@ void rd(Face f) {
         }
     }   
 }
+//rotate face to left
 void rg(Face f) {
     int i,j;
     couleur oldF[3][3];
@@ -27,6 +29,7 @@ void rg(Face f) {
         }
     }
 }
+//do U mov
 void u(Cube *cube) {
     couleur l1[3],l2[3],l3[3],l4[3];
     int i;
@@ -44,6 +47,7 @@ void u(Cube *cube) {
     }
     rg(cube->U);
 }
+//do U' mov
 void up(Cube *cube) {
     couleur l1[3],l2[3],l3[3],l4[3];
     int i;
@@ -61,6 +65,7 @@ void up(Cube *cube) {
     }
     rd(cube->U);
 }
+//do D mov
 void d(Cube *cube) {
     couleur l1[3],l2[3],l3[3],l4[3];
     int i;
@@ -78,6 +83,7 @@ void d(Cube *cube) {
     }
     rg(cube->D);
 }
+//do D' mov
 void dp(Cube *cube) {
     couleur l1[3],l2[3],l3[3],l4[3];
     int i;
@@ -95,6 +101,7 @@ void dp(Cube *cube) {
     }
     rd(cube->D);
 }
+//do L mov
 void l(Cube *cube) {
     couleur c1[3],c2[3],c3[3],c4[3];
     int i;
@@ -112,6 +119,7 @@ void l(Cube *cube) {
     }
     rg(cube->L);
 }
+//do L' mov
 void lp(Cube *cube) {
     couleur c1[3],c2[3],c3[3],c4[3];
     int i;
@@ -129,6 +137,7 @@ void lp(Cube *cube) {
     }
     rd(cube->L);
 }
+//do R mov
 void r(Cube *cube) {
     couleur c1[3],c2[3],c3[3],c4[3];
     int i;
@@ -146,6 +155,7 @@ void r(Cube *cube) {
     }
     rg(cube->R);
 }
+//do R' mov
 void rp(Cube *cube) {
     couleur c1[3],c2[3],c3[3],c4[3];
     int i;
@@ -163,6 +173,7 @@ void rp(Cube *cube) {
     }
     rd(cube->R);
 }
+//do F mov
 void f(Cube *cube) {
     couleur c1[3],c2[3],c3[3],c4[3];
     int i;
@@ -180,6 +191,7 @@ void f(Cube *cube) {
     }
     rg(cube->F);
 }
+//do F' mov
 void fp(Cube *cube) {
     couleur c1[3],c2[3],c3[3],c4[3];
     int i;
@@ -197,6 +209,7 @@ void fp(Cube *cube) {
     }
     rd(cube->F);
 }
+//do B mov
 void b(Cube *cube) {
     couleur c1[3],c2[3],c3[3],c4[3];
     int i;
@@ -214,6 +227,7 @@ void b(Cube *cube) {
     }
     rg(cube->B);
 }
+//do B' mov
 void bp(Cube *cube) {
     couleur c1[3],c2[3],c3[3],c4[3];
     int i;

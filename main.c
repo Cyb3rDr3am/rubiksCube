@@ -1,5 +1,6 @@
 #include "solveur.h"
 #include "guiRubiksCube.h"
+//initialise un cube déja résolue
 Cube *initCube() {
     Cube *cube = malloc(sizeof(Cube));
     if (!cube) {
@@ -39,6 +40,7 @@ Cube *initCube() {
     }
     return cube;
 }
+//enregistre le cube dans un fichier
 void writeCube(Cube *cube,FILE *f) {
     int i,j,k;
     for (i=0;i<3;i++) {
@@ -76,6 +78,7 @@ void writeCube(Cube *cube,FILE *f) {
         fprintf(f,"\n");
     }
 }
+//mélange le cube avec des mouvements aléatoires
 void randomizeCube(Cube *cube) {
     srand(time(NULL));
     int action;
@@ -86,6 +89,7 @@ void randomizeCube(Cube *cube) {
         (tab[action])(cube);
     }
 }
+//affiche le menu principal
 void afficheMenu() {
     printf("0) afficher le cube\
 \n1)sauvegarder le rubiks cube\

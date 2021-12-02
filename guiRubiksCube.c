@@ -1,5 +1,5 @@
 #include "guiRubiksCube.h"
-
+//initialise la gestion d'évènement et de l'affichage du rubiks cube
 void initGui(Cube *cube,maillon *m)
 {
     SDL_Window *window;
@@ -61,12 +61,14 @@ void initGui(Cube *cube,maillon *m)
     SDL_Quit();
     TTF_Quit();
 }
+//fonction permettant de quitter SDL en cas d'erreur avec l'erreur correspondante
 void SDL_ExitWithError(const char *msg)
 {
     SDL_Log("ERROR : %s > %s\n", msg, SDL_GetError());
     SDL_Quit();
     exit(1);
 }
+//change la couleur de dessin selon la couleur précisée
 void setCouleurFace(couleur c, SDL_Renderer *r)
 {
     switch (c)
@@ -93,6 +95,7 @@ void setCouleurFace(couleur c, SDL_Renderer *r)
         break;
     }
 }
+//dessine le cube ainsi que le mouvement précédent et suivant
 void drawCube(Cube *cube, SDL_Renderer *r,maillon *m,int cubeFinie,TTF_Font *police)
 {
     SDL_Rect rect;
@@ -182,6 +185,7 @@ void drawCube(Cube *cube, SDL_Renderer *r,maillon *m,int cubeFinie,TTF_Font *pol
     SDL_FreeSurface(texte);
 
 }
+//met a jour la fenetre avec les nouveaux élémenents
 void majWindow(Cube *cube,SDL_Renderer *renderer,maillon *m,int cubeFinie,TTF_Font *police) {
     SET_COLOR(renderer,CN);
     if (SDL_RenderClear(renderer) != 0) {
@@ -190,6 +194,7 @@ void majWindow(Cube *cube,SDL_Renderer *renderer,maillon *m,int cubeFinie,TTF_Fo
     drawCube(cube,renderer,m,cubeFinie,police);
     SDL_RenderPresent(renderer);
 }
+//prend une chaine de caracère représenetant un mouvement et réalise ce mouvement
 void sToRor(Cube *cube,const char *mov) {
     if (!strcmp(mov,"F")) {f(cube);}
     else if (!strcmp(mov,"B")) {b(cube);}
@@ -210,6 +215,7 @@ void sToRor(Cube *cube,const char *mov) {
     else if (!strcmp(mov,"U2")) {u(cube);u(cube);}
     else if (!strcmp(mov,"D2")) {d(cube);d(cube);}
 }
+//prend une chaine de caracère représenetant un mouvement et réalise le mouvement inverse
 void sToRorI(Cube *cube,const char *mov) {
     if (!strcmp(mov,"F")) {fp(cube);}
     else if (!strcmp(mov,"B")) {bp(cube);}
@@ -230,6 +236,7 @@ void sToRorI(Cube *cube,const char *mov) {
     else if (!strcmp(mov,"U2")) {u(cube);u(cube);}
     else if (!strcmp(mov,"D2")) {d(cube);d(cube);}
 }
+//défait le cube
 void annuleDeplace(Cube *cube,maillon *m) {
     while (m->prev!=NULL) m = m->prev;
     while (m!=NULL) {
@@ -237,6 +244,7 @@ void annuleDeplace(Cube *cube,maillon *m) {
         m = m->next;
     }
 }
+//réalise le mouvement suivant et met a jour la fenetre
 void next(Cube *cube,maillon **m,SDL_Renderer *r,int *cubeFini,TTF_Font *police) {
     if (*cubeFini == 0) {
         sToRor(cube,(*m)->mov);
@@ -247,6 +255,7 @@ void next(Cube *cube,maillon **m,SDL_Renderer *r,int *cubeFini,TTF_Font *police)
         majWindow(cube,r,*m,*cubeFini,police);
     }
 }
+//réalise le mouvement précédent et met a jour la fenetre
 void prev(Cube *cube,maillon **m,SDL_Renderer *r,int *cubeFini,TTF_Font *police) {
     if (*m && (*m)->next) {
         if (*cubeFini == 1) {
