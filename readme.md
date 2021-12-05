@@ -10,8 +10,12 @@ Rubiks cube 3*3 réalisée en C par Léo Beauchet et Dorian Drancourt
 2.Project description
 3.How to use
 ### Installation
--Installer SDL2(https://www.libsdl.org/download-2.0.php)
+-Installer SDL2(https://www.libsdl.org/download-2.0.php) 
+Ubuntu : sudo apt-get install libsdl2-dev
+Window : décompresser le dossier
 -Insaller SDL2_ttf(https://www.libsdl.org/projects/SDL_ttf/)
+Ubuntu : sudo apt-get install libsdl2-ttf-dev
+Window : décompresser le dossier
 Pour compiler le projet utilisez la commande make dans un shell puis make clean pour supprimer les fichiers inutile.
 #### Project description
 Le projet contient les fichiers suivants:
@@ -28,6 +32,8 @@ afficheMov qui affiche tous les mouvements de la liste et une fonction pour lib�
 -faceRotations.c implémente toutes les fonctions de rotation du cube
 
 -font.otf fichier de police utilisée par l'interface graphique
+
+-Makefile
 
 Pour représenter le rubiks cube on a choisi de le représenter par une structure contenant 6 champs de typeFace(D,U,L,R,F,B) qui
 sont des tableaux 3*3  de couleur qui est une énumération représentant les couleurs des faces.
