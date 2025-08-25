@@ -1,8 +1,3 @@
-# Headline H1
-## Headline H2
-### Headline H3
-#### Headline H4 
-##### Headline H5
 # Project Rubiks Cube 3*3
 Rubiks cube 3*3 réalisée en C par Léo Beauchet et Dorian Drancourt
 ## table of content
